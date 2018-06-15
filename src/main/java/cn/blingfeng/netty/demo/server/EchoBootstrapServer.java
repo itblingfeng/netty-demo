@@ -3,6 +3,7 @@ package cn.blingfeng.netty.demo.server;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -19,6 +20,7 @@ public class EchoBootstrapServer {
 
     private void start() throws InterruptedException {
         final EchoServerHandler serverHandler = new EchoServerHandler();
+        EchoServerHandler2 serverHandler2 = new EchoServerHandler2();
         EventLoopGroup group = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(group).channel(NioServerSocketChannel.class)
@@ -26,7 +28,7 @@ public class EchoBootstrapServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(serverHandler);
+                        socketChannel.pipeline().addLast(serverHandler).addLast(serverHandler2);
                     }
                 });
         try {
