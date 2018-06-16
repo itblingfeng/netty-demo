@@ -28,7 +28,9 @@ public class EchoBootstrapServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(serverHandler).addLast(serverHandler2);
+                        socketChannel.pipeline()
+                                .addLast(serverHandler)
+                                .addLast(serverHandler2);
                     }
                 });
         try {
